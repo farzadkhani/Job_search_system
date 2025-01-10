@@ -11,6 +11,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ENVIRONMENT = "local"
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -37,3 +39,8 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+
+ELASTICSEARCH_PARAMETERS = {
+    "address": "http://localhost:9200",
+}

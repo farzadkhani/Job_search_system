@@ -4,10 +4,12 @@ from django.contrib.auth.models import (
     BaseUserManager,
 )
 from django.db import models
-from django.db.models import Q
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
-from shared_features.models import ModelMixin
-from .choices import USER_TYPE_CHOICES
+from shared_features.mixins import ModelMixin
+from shared_features.models import Skill
+from .choices import USER_TYPE_CHOICES, GENDER_CHOICES, EDUCATION_CHOICES
 
 
 class UserManager(BaseUserManager):
@@ -81,15 +83,25 @@ class User(AbstractBaseUser, PermissionsMixin, ModelMixin):
 class Address(ModelMixin):
     """
     Address model for reverse related in JobSeeker and Company.
+    generic relation with JobSeeker or Company.
     """
 
     address_text = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     city = models.CharField(max_length=100)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
+
+    class Meta:
+        unique_together = ("content_type", "object_id")
+        indexes = [
+            models.Index(fields=["content_type", "object_id"]),
+        ]
 
     def __str__(self):
         return f"{self.address_text}, {self.city}"
-    
+
     # TODO: prevent each user have more than one active address
 
 
@@ -97,13 +109,32 @@ class JobSeeker(ModelMixin):
     """
     JobSeeker model with relation to User and Address.
     """
+
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="job_seeker_profile"
+        User, on_delete=models.PROTECT, related_name="job_seeker_user"
     )
-    age = models.PositiveIntegerField()
-    gender = models.CharField(max_length=20)
-    education = models.CharField(max_length=100)
-    addresses = models.ManyToManyField(Address, related_name="job_seekers")
+    barth_date = models.DateField(null=True, blank=True)
+    gender = models.CharField(
+        max_length=20, choices=GENDER_CHOICES, null=True, blank=True
+    )
+    education = models.CharField(
+        max_length=100, choices=EDUCATION_CHOICES, null=True, blank=True
+    )
+
+    active_address = models.ForeignKey(
+        Address,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="job_seeker_active_address",
+    )
+    skills = models.ManyToManyField(
+        Skill,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="job_seekers_skills",
+    )
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
@@ -113,6 +144,7 @@ class FileStore(ModelMixin):
     """
     FileStore model for storing files for JobSeeker.
     """
+
     file_path = models.FileField(upload_to="files/")
     is_active = models.BooleanField(default=True)
     job_seeker = models.ForeignKey(
@@ -131,6 +163,7 @@ class IndustryArea(ModelMixin):
     """
     class for store industry areas of companies
     """
+
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -141,14 +174,23 @@ class Company(ModelMixin):
     """
     Company model with relation to User,  Address and IndustryArea.
     """
+
     name = models.CharField(max_length=255)
     establishment_year = models.PositiveIntegerField()
     phone_number = models.CharField(max_length=20)
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="company_profile"
+        User, on_delete=models.CASCADE, related_name="company_user"
     )
-    addresses = models.ManyToManyField(Address, related_name="companies")
-    industry_areas = models.ManyToManyField(IndustryArea, related_name="companies")
+    active_address = models.ForeignKey(
+        Address,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="company_active_address",
+    )
+    industry_areas = models.ManyToManyField(
+        IndustryArea, related_name="company_industry_areas"
+    )
 
     def __str__(self):
         return self.name

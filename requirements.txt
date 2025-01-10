@@ -4,3 +4,4 @@ django-filter>=24.3,<24.4
 djangorestframework>=3.15.2,<3.16
 django-cors-headers>=4.6.0,<4.7
 pytest-django>=4.9.0,<4.10
+elasticsearch>=8.17.0,<8.18
