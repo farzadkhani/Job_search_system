@@ -25,6 +25,15 @@ The Job Search System is a web-based platform designed to connect job seekers (c
 
 ## Installation
 1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/farzadkhani/Job_search_system.git
-   cd job_search_system
+    ```bash
+    git clone https://github.com/farzadkhani/Job_search_system.git
+    cd job_search_system
+    make local_settings.py:
+        cd core
+        make copy from `sample_local_settings.py` and name `local_settings.py`
+        update `local_settings.py` parameters
+
+## RUN
+    In root of project:
+        python manage.py migrate
+        python manage.py runserver 127.0.0.1:8000
