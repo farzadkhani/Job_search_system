@@ -15,30 +15,16 @@ class JobPosting(ModelMixin):
     title = models.CharField(max_length=255)
     description = models.TextField()
     expiry_date = models.DateField()
-    salary_range_start = models.IntegerField(
-        max_digits=11,
-        null=True,
-        blank=True,
-    )
-    salary_range_end = models.IntegerField(
-        max_digits=11,
-        null=True,
-        blank=True,
-    )
+    salary_range_start = models.PositiveIntegerField(null=True, blank=True)
+    salary_range_end = models.PositiveIntegerField(null=True, blank=True)
     working_hours = models.CharField(max_length=50)
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, related_name="job_posting_company"
     )
     industry_areas = models.ManyToManyField(
-        IndustryArea, null=True, blank=True, related_name="job_posting_industry_areas"
+        IndustryArea, related_name="job_posting_industry_areas"
     )
-    skills = models.ManyToManyField(
-        Skill,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="job_posting_skills",
-    )
+    skills = models.ManyToManyField(Skill, related_name="job_posting_skills")
     # TODO: Use object storages and pass address
     active_photo = models.ForeignKey(
         "JobPostingPhoto",
@@ -54,8 +40,6 @@ class JobPosting(ModelMixin):
         indexes = [
             models.Index(fields=["title"]),
             models.Index(fields=["company"]),
-            models.Index(fields=["industry_areas"]),
-            models.Index(fields=["skills"]),
         ]
 
     def __str__(self):

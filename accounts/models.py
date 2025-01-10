@@ -7,12 +7,12 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
-from shared_features.mixins import ModelMixin
+from shared_features.mixins import ModelMixin, SoftDeleteMixinManager
 from shared_features.models import Skill
-from .choices import USER_TYPE_CHOICES, GENDER_CHOICES, EDUCATION_CHOICES
+from .choices import USAGE_TYPE_CHOICES, GENDER_CHOICES, EDUCATION_CHOICES
 
 
-class UserManager(BaseUserManager):
+class UserManager(BaseUserManager, SoftDeleteMixinManager):
     """
     Custom user model manager where email is the unique identifiers
     for authentication instead of usernames.
@@ -34,11 +34,16 @@ class UserManager(BaseUserManager):
         """
         Create and save a SuperUser with the given email and password.
         """
-        extra_fields.setdefault("user_type", "SuperUser")
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
 
-        if extra_fields.get("user_type") != "SuperUser":
-            raise ValueError("Superuser must have user_type=SuperUser.")
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+        if extra_fields.get("usage_type") != None:
+            raise ValueError("Superuser must have usage_type=none.")
         return self.create_user(email, password, **extra_fields)
 
 
@@ -54,11 +59,12 @@ class User(AbstractBaseUser, PermissionsMixin, ModelMixin):
         help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
     )
     email = models.EmailField(unique=True, help_text="Required. Unique email address.")
-    user_type = models.CharField(
+    usage_type = models.CharField(
         max_length=10,
-        choices=USER_TYPE_CHOICES,
-        default="JobSeeker",
+        choices=USAGE_TYPE_CHOICES,
         help_text="Type of user (JobSeeker or Employer).",
+        null=True,
+        blank=True,
     )
     first_name = models.CharField(
         max_length=150, blank=True, help_text="User's first name."
@@ -70,7 +76,14 @@ class User(AbstractBaseUser, PermissionsMixin, ModelMixin):
         default=True,
         help_text="Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
     )
-
+    is_staff = models.BooleanField(
+        default=False,
+        help_text="Designates whether the user can log into this admin site.",
+    )
+    is_superuser = models.BooleanField(
+        default=False,
+        help_text="Designates that this user has all permissions without explicitly assigning them.",
+    )
     objects = UserManager()
 
     USERNAME_FIELD = "email"
@@ -113,7 +126,7 @@ class JobSeeker(ModelMixin):
     user = models.OneToOneField(
         User, on_delete=models.PROTECT, related_name="job_seeker_user"
     )
-    barth_date = models.DateField(null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
     gender = models.CharField(
         max_length=20, choices=GENDER_CHOICES, null=True, blank=True
     )
@@ -128,13 +141,7 @@ class JobSeeker(ModelMixin):
         blank=True,
         related_name="job_seeker_active_address",
     )
-    skills = models.ManyToManyField(
-        Skill,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="job_seekers_skills",
-    )
+    skills = models.ManyToManyField(Skill, related_name="job_seekers_skills")
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"

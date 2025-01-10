@@ -1,8 +1,6 @@
-USER_TYPE_CHOICES = (
+USAGE_TYPE_CHOICES = (
     ("JobSeeker", "Job Seeker"),
     ("Employer", "Employer"),
-    ("Staff", "Staff"),
-    ("SuperUser", "SuperUser"),
 )
 
 GENDER_CHOICES = (

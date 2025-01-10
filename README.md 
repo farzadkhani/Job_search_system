@@ -32,6 +32,12 @@ The Job Search System is a web-based platform designed to connect job seekers (c
         cd core
         make copy from `sample_local_settings.py` and name `local_settings.py`
         update `local_settings.py` parameters
+    in root of project:
+        python manage.py makemigrations accounts
+        python manage.py migrate accounts
+
+        python manage.py makemigrations
+        python manage.py migrate
 
 ## RUN
     In root of project:

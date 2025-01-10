@@ -26,9 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # local apps
     "accounts",
-    "shared_features",
     "jobs",
+    "shared_features",
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
 
 ROOT_URLCONF = 'core.urls'
 
