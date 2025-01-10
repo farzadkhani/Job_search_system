@@ -1,0 +1,27 @@
+# Job Search System
+
+## Introduction
+The Job Search System is a web-based platform designed to connect job seekers (candidates) with employers seeking to hire new talent. The system facilitates user registration, job postings, application submissions, and advanced search and filtering capabilities to enhance the recruitment process for both parties.
+
+## Features
+- **User Registration**: Allows users to sign up as either job seekers or employers.
+- **Profile Management**: Users can create and edit their profiles, including uploading resumes for job seekers.
+- **Job Posting**: Employers can create, edit, and manage job listings.
+- **Job Applications**: Job seekers can apply to job postings.
+- **Job Listings**: Job seekers can view and search through available job postings.
+- **Advanced Search**: Implements efficient search algorithms to find relevant job listings based on user skills and preferences.
+- **Filtering**: Enables job seekers to filter job listings based on various criteria such as salary range.
+- **Authentication & Authorization**: Secure access control ensuring users can only perform actions permitted for their role.
+
+## Technology Stack
+- **Backend Framework**: Django with Django REST Framework
+- **Programming Language**: Python
+- **Database**: PostgreSQL
+- **Authentication**: Simple JWT(JSON Web Tokens)
+- **Version Control**: Git
+
+## Installation
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/farzadkhani/Job_search_system.git
+   cd job_search_system
