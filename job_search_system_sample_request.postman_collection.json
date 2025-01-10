@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "55ab9136-9165-41f8-8016-891f845163ce",
+		"name": "job_search_system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21775982",
+		"_collection_link": "https://viramrestate.postman.co/workspace/job_search_system~c4c320bc-8de2-4d24-ace8-cf4bc3125779/collection/21775982-55ab9136-9165-41f8-8016-891f845163ce?action=share&source=collection_link&creator=21775982"
+	},
+	"item": [
+		{
+			"name": "accounts",
+			"item": [
+				{
+					"name": "registration",
+					"item": [
+						{
+							"name": "Registration staff",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"johndoe@example.com\",\n    // \"usage_type\": \"JobSeeker\",\n    \"password\": \"StrongPassword123!\",\n    \"password2\": \"StrongPassword123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/accounts/v1/staff-register/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"v1",
+										"staff-register",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registration employer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"employer_4@example.com\",\n    // \"usage_type\": \"JobSeeker\",\n    \"password\": \"StrongPassword123!\",\n    \"password2\": \"StrongPassword123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/accounts/v1/employer-register/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"v1",
+										"employer-register",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registration jobseeker",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"jobseeker_1@example.com\",\n    // \"usage_type\": \"JobSeeker\",\n    \"password\": \"StrongPassword123!\",\n    \"password2\": \"StrongPassword123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/accounts/v1/jobseeker-register/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"v1",
+										"jobseeker-register",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"employer_4@example.com\",\n    \"password\": \"StrongPassword123!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/accounts/v1/login/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"v1",
+										"login",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "refresh token",
+					"item": [
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczNjYyMTIxNywiaWF0IjoxNzM2NTM0ODE3LCJqdGkiOiI4ZTAyNGI5ZDdmMzQ0ZTliYWE3MzJlYjZlN2M0MzM4NiIsInVzZXJfaWQiOjksInVzZXJuYW1lIjoiZW1wbG95ZXJfNCIsImVtYWlsIjoiZW1wbG95ZXJfNEBleGFtcGxlLmNvbSIsInVzYWdlX3R5cGUiOiJFbXBsb3llciJ9.yXjXlzSbalbFGcZuEtGDwWvSDiUY99JhU_8A4opfOyQ\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/accounts/v1/token/refresh/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"v1",
+										"token",
+										"refresh",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"item": [
+						{
+							"name": "logout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTczNjYyMTQ4MSwiaWF0IjoxNzM2NTM1MDgxLCJqdGkiOiJlN2M3NzZkOTIzMWI0ODZiYTcwM2Y0MzJmNzY4MmJmOCIsInVzZXJfaWQiOjksInVzZXJuYW1lIjoiZW1wbG95ZXJfNCIsImVtYWlsIjoiZW1wbG95ZXJfNEBleGFtcGxlLmNvbSIsInVzYWdlX3R5cGUiOiJFbXBsb3llciJ9.yHNMfZLvPlfWjUWn9bWyDN7h16SmSkOpB3wugV91t1k\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/accounts/v1/logout/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"v1",
+										"logout",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

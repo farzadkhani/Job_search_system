@@ -76,12 +76,12 @@ class SoftDeleteMixin(models.Model):
 
         self.save()
 
-    # def purge(self, using=None, keep_parents=False):
-    #     """
-    #     Optional method for permanently deleting the record. 
-    #     Use with caution.
-    #     """
-    #     return super().delete(using=using, keep_parents=keep_parents)
+    def purge(self, using=None, keep_parents=False):
+        """
+        Optional method for permanently deleting the record. 
+        Use with caution.
+        """
+        return super().delete(using=using, keep_parents=keep_parents)
 
 
 class ModelMixin(TimeStampMixin, SoftDeleteMixin):

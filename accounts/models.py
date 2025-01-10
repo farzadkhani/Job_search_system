@@ -91,6 +91,12 @@ class User(AbstractBaseUser, PermissionsMixin, ModelMixin):
 
     def __str__(self):
         return self.email
+    
+    def save(self, *args, **kwargs):
+        # manage username. it should be first part of email
+        if not self.id:
+            self.username = self.email.split("@")[0]
+        super().save(*args, **kwargs)
 
 
 class Address(ModelMixin):
