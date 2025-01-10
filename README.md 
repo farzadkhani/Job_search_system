@@ -14,8 +14,9 @@ The Job Search System is a web-based platform designed to connect job seekers (c
 - **Authentication & Authorization**: Secure access control ensuring users can only perform actions permitted for their role.
 
 ## Technology Stack
-- **Backend Framework**: Django with Django REST Framework
 - **Programming Language**: Python
+- **Backend Framework**: Django with Django REST Framework
+- **Database**: sqlite3, ElasticSearch
 - **Authentication**: Simple JWT(JSON Web Tokens)
 - **Version Control**: Git
 
