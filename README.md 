@@ -23,6 +23,9 @@ The Job Search System is a web-based platform designed to connect job seekers (c
 ## Class Diagram
 ![Class diagram illustrating the relationships between entities in the Job Search System](class_diagram.svg)
 
+## sample request apis in postman format
+![sample request apis in postman format](job_search_system_sample_request.postman_collection.json)
+
 ## Installation
 1. **Clone the Repository**
     ```bash
