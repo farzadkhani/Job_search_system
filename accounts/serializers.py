@@ -82,7 +82,7 @@ class JobSeekerRegisterSerializer(BaseRegisterSerializer):
 
     def create(self, validated_data):
         validated_data.pop("password2", None)
-        user = User.objects.create_user(
+        user = User.objects.select_related().prefetch_related().create_user(
             email=validated_data["email"],
             password=validated_data["password"],
             usage_type="JobSeeker",
@@ -97,7 +97,7 @@ class EmployerRegisterSerializer(BaseRegisterSerializer):
 
     def create(self, validated_data):
         validated_data.pop("password2", None)
-        user = User.objects.create_user(
+        user = User.objects.select_related().prefetch_related().create_user(
             email=validated_data["email"],
             password=validated_data["password"],
             usage_type="Employer",
@@ -113,7 +113,7 @@ class StaffRegisterSerializer(BaseRegisterSerializer):
 
     def create(self, validated_data):
         validated_data.pop("password2", None)
-        user = User.objects.create_user(
+        user = User.objects.select_related().prefetch_related().create_user(
             email=validated_data["email"],
             password=validated_data["password"],
             usage_type="JobSeeker",

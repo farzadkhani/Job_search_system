@@ -140,7 +140,14 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
-class StaffRegisterCreateAPIView(generics.CreateAPIView):
+class RegisterCreateAPIViewMixin(generics.CreateAPIView):
+    """
+    Register CreateAPIView Mixin
+    """
+    queryset = User.objects.select_related().prefetch_related().all()
+    permission_classes = (permissions.AllowAny,)
+
+class StaffRegisterCreateAPIView(RegisterCreateAPIViewMixin):
     """
     REGISTER ROUTE (StaffRegisterCreateAPIView)
 
@@ -268,14 +275,11 @@ class StaffRegisterCreateAPIView(generics.CreateAPIView):
         - **Location in Test Suite**: `accounts/tests/test_api.py::`
         TODO: should implement tests
     """
-
-    queryset = User.objects.all()
-    permission_classes = (permissions.AllowAny,)
     serializer_class = StaffRegisterSerializer
 
 
 # TODO: implement rate limit
-class EmployerRegisterCreateAPIView(generics.CreateAPIView):
+class EmployerRegisterCreateAPIView(RegisterCreateAPIViewMixin):
     """
     REGISTER ROUTE (EmployerRegisterCreateAPIView)
 
@@ -403,13 +407,11 @@ class EmployerRegisterCreateAPIView(generics.CreateAPIView):
         TODO: should implement tests
     """
 
-    queryset = User.objects.all()
-    permission_classes = (permissions.AllowAny,)
     serializer_class = EmployerRegisterSerializer
 
 
 # TODO: implement rate limit
-class JobSeekerRegisterCreateAPIView(generics.CreateAPIView):
+class JobSeekerRegisterCreateAPIView(RegisterCreateAPIViewMixin):
     """
     REGISTER ROUTE (JobSeekerRegisterCreateAPIView)
 
@@ -536,8 +538,6 @@ class JobSeekerRegisterCreateAPIView(generics.CreateAPIView):
         TODO: should implement tests
     """
 
-    queryset = User.objects.all()
-    permission_classes = (permissions.AllowAny,)
     serializer_class = JobSeekerRegisterSerializer
 
 
