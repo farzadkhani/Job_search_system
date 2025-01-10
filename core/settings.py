@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
     # local apps
     "accounts",
     "jobs",

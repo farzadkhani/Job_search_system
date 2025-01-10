@@ -23,8 +23,12 @@ The Job Search System is a web-based platform designed to connect job seekers (c
 ## Class Diagram
 ![Class diagram illustrating the relationships between entities in the Job Search System](class_diagram.svg)
 
-## sample request apis in postman format
+## Sample Request APIs in Postman Format
 ![sample request apis in postman format](job_search_system_sample_request.postman_collection.json)
+
+## Documentation
+- **{BaseURL}/docs/schema/redoc/
+- **{BaseURL}/docs/schema/swagger-ui/
 
 ## Installation
 1. **Clone the Repository**
