@@ -20,6 +20,9 @@ The Job Search System is a web-based platform designed to connect job seekers (c
 - **Authentication**: Simple JWT(JSON Web Tokens)
 - **Version Control**: Git
 
+## Class Diagram
+![Class diagram illustrating the relationships between entities in the Job Search System](class_diagram.svg)
+
 ## Installation
 1. **Clone the Repository**
    ```bash
