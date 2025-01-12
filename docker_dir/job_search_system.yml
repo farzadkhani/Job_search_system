@@ -1,0 +1,56 @@
+version: '3'
+
+services:  
+  
+  web_job_search_system:
+    container_name: web_job_search_system_${SERVER_NAME}
+    build:
+      context: ..
+      dockerfile: ./docker_dir/${WEB_DOCKER_FILE_NAME}.Dockerfile
+    volumes:
+      - ..:/app/project
+    ports:
+      - "${WEB_EXTERNAL_PORT}:8000"
+    environment:
+      - SERVER_NAME=${SERVER_NAME}
+    networks:
+      - job_search_system_network
+
+  # elasticsearch_job_search_system:
+  #   container_name: elasticsearch_job_search_system_${SERVER_NAME}
+  #   image: elasticsearch:7.8.0
+  #   environment:
+  #     - "ES_JAVA_OPTS=${ELASTICSEARCH_ES_JAVA_OPTS}"
+  #     - discovery.type=${ELASTICSEARCH_DISCOVERY_TYPE}
+  #     - xpack.security.enabled=${ELASTICSEARCH_XPACK_SECURITY_ENABLED}
+  #     - xpack.security.transport.ssl.enabled=${XPACK_SECURITY_TRANSPORT_SSL_ENABLED}
+  #   ports:
+  #     - "${ELASTICSEARCH_EXTERNAL_PORT_ONE}:9200"
+  #     - "${ELASTICSEARCH_EXTERNAL_PORT_TWO}:9300"
+  #   mem_limit: ${ELASTICSEARCH_MEM_LIMIT}
+  #   ulimits:
+  #     memlock:
+  #       soft: ${ELASTICSEARCH_ULIMITS_MEMLOCK_SOFT}
+  #       hard: ${ELASTICSEARCH_ULIMITS_MEMLOCK_HARD}
+  #     nofile:
+  #       soft: ${ELASTICSEARCH_ULIMITS_NOFILE_SOFT}
+  #       hard: ${ELASTICSEARCH_ULIMITS_NOFILE_HARD}
+  #   volumes:
+  #     - elasticsearch-job-search-system:${ELASTICSEARCH_CONTAINER_DATA_PATH}
+  #   networks:
+  #     - job_search_system_network
+
+  memcached_job_search_system:
+    container_name: memcached_job_search_system_${SERVER_NAME}
+    image: memcached:1.6.34-alpine3.21
+    ports:
+      - "${MEMCACHED_EXTERNAL_PORT}:11211"
+    networks:
+      - job_search_system_network
+
+# volumes:
+#   elasticsearch-job-search-system:
+#     driver: local
+networks:
+  job_search_system_network:
+    driver: bridge  
